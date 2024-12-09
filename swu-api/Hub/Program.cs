@@ -17,7 +17,7 @@ builder.Services.AddCors();
 builder.Services.AddSignalR();
 
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<ISwdbService, SwdbService>();
+builder.Services.AddSingleton<ISwudbService, SwudbService>();
 
 var app = builder.Build();
 

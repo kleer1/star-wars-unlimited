@@ -1,37 +1,60 @@
 ﻿
+using SwuApi.GameEngine.Cards;
+using SwuApi.GameEngine.Utils;
+using static SwuApi.GameEngine.Utils.ListExtension;
+
 namespace SwuApi.GameEngine.Models
 {
     internal class Player : IPlayer
     {
-        public Player(ICard baseCard, ICard leader)
+        public Player(IReadOnlyDictionary<string, int> deck)
         {
             Id = new Guid();
-            Base = baseCard;
-            Leader = leader;
             Deck = [];
             Hand = [];
             Discard = [];
             Resources = [];
             Ground = [];
             Space = [];
+
+            foreach (KeyValuePair<string, int> pair in deck)
+            {
+                for (int i = 0; i < pair.Value; i++)
+                {
+                    ICard card = SwudbMappingUtil.GetCardFromSetNumber(pair.Key);
+                    if (card is ILeader)
+                    {
+                        Leader = (ILeader)card;
+                    }
+                    else if (card is IBase)
+                    {
+                        Base = (IBase)card;
+                    }
+                    else if (card is IPlayableCard)
+                    {
+                        Deck.Add((IPlayableCard)card);
+                    }
+                }
+            }
+            Deck.Shuffle();
         }
 
         public Guid Id { get; }
 
-        public ICard Base { get; private set; }
+        public IBase Base { get; }
 
-        public ICard Leader { get; private set; }
+        public ILeader Leader { get; }
 
-        public List<ICard> Deck { get; private set; }
+        public List<IPlayableCard> Deck { get; }
 
-        public List<ICard> Hand { get; private set; }
+        public List<IPlayableCard> Hand { get; }
 
-        public List<ICard> Discard { get; private set; }
+        public List<IPlayableCard> Discard { get; }
 
-        public List<ICard> Resources { get; private set; }
+        public List<IPlayableCard> Resources { get; }
 
-        public List<ICard> Ground { get; private set; }
+        public List<IGroundUnit> Ground { get; }
 
-        public List<ICard> Space { get; private set; }
+        public List<ISpaceUnit> Space { get; }
     }
 }

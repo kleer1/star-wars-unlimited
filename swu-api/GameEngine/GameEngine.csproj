@@ -7,4 +7,8 @@
     <RootNamespace>SwuApi.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="IKVM" Version="8.10.3" />
+  </ItemGroup>
+
 </Project>
