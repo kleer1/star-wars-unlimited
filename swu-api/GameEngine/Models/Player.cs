@@ -1,5 +1,6 @@
 ﻿
 using SwuApi.GameEngine.Cards;
+using SwuApi.GameEngine.Exceptions;
 using SwuApi.GameEngine.Utils;
 using static SwuApi.GameEngine.Utils.ListExtension;
 
@@ -37,6 +38,21 @@ namespace SwuApi.GameEngine.Models
                 }
             }
             Deck.Shuffle();
+
+            if (Base == null)
+            {
+                throw new InvalidDeckException("Player's deck must contain a base");
+            }
+
+            if (Leader == null)
+            {
+                throw new InvalidDeckException("Player's deck must contain a leader");
+            }
+
+            if (Deck.Count < 50)
+            {
+                throw new InvalidDeckException("Player's deck must contain at least 50 cards");
+            }
         }
 
         public Guid Id { get; }
