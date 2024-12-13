@@ -1,7 +1,7 @@
 # TODOs
 1. **GameEngine**
    * Main idea of how the GameEngine will work:
-     1. The GameEnine will encapsulate a single game of star wars unlimited.
+     1. The GameEnine will encapsulate a single game of star wars unlimited. I made something similar for the [Star Wars Deckbuidling game](https://github.com/kleer1/swdb/blob/main/Game/SWDBGame.cs). Don't feel the need to follow it exactly. It wasn't build to be used with a UI and was made for a different game, but could be a template for how to do it.
      2. It will have an `Initialize()` method that will finish setting everything up and return the initial `GameState`.
         * The `GameState` will have a the know game state for each player (what is in a deck/opponent's hand will be absent). It will also have the Id of the current player and a list of valid actions that player can take. This `Action` object should also represent the number of choices associated with the action and all of the card Ids that are valid choices. Example: If it is an attack action there would be two nested choices. First would be selecting the unit to attack with and thesecond would be the base or unit to attack. The front end can then use these Ids to force to user to only select valid actions. 
      4. It will have an `ApplyAction()` method that will be called after the user has selected the action they want to use and all correpsonding choices. The `GameEngine` should still double check that what it receives is valid (never trust user input). It will then apply the choice to the game and return the next `GameState`. In order to speed the application of the action, we'll probably want a dictionary of Id to card so that we can look up any card by its Id instead of having to search the game state for it. 
